@@ -1,0 +1,43 @@
+# Simple Makefile for a Go project
+
+# Build the application
+all: build test
+
+build:
+	@echo "Building..."
+	
+	
+	@go build -o main.exe cmd/api/main.go
+
+# Run the application
+run:
+	@go run cmd/api/main.go
+# Create DB container
+docker-run:
+	@docker compose up --build
+
+# Shutdown DB container
+docker-down:
+	@docker compose down
+
+# Test the application
+test:
+	@echo "Testing..."
+	@go test ./... -v
+# Integrations Tests for the application
+itest:
+	@echo "Running integration tests..."
+	@go test ./internal/database -v
+
+# Clean the binary
+clean:
+	@echo "Cleaning..."
+	@rm -f main
+
+# Live Reload
+watch:
+	@D:\Project\GoWorkspace\bin\air.exe
+
+dev: watch
+
+.PHONY: all build run test clean watch dev docker-run docker-down itest
