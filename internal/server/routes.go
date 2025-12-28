@@ -19,6 +19,8 @@ func (s *FiberServer) RegisterFiberRoutes() {
 
 	s.App.Get("/health", s.healthHandler)
 
+	// Setup authentication routes
+	s.SetupAuthRoutes()
 }
 
 func (s *FiberServer) HelloWorldHandler(c *fiber.Ctx) error {

@@ -1,0 +1,116 @@
+### API Stockflow - Authentication Endpoints
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+### 1. Health Check
+GET {{baseUrl}}/health
+
+### 2. Register Admin User
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "fullname": "Administrator",
+  "role": "admin"
+}
+
+### 3. Register Manager User
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "username": "manager",
+  "password": "manager123",
+  "fullname": "Manager User",
+  "role": "manager"
+}
+
+### 4. Register Staff User
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "username": "staff",
+  "password": "staff123",
+  "fullname": "Staff User",
+  "role": "staff"
+}
+
+### 5. Login as Admin
+# @name loginAdmin
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### 6. Login as Manager
+# @name loginManager
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "manager",
+  "password": "manager123"
+}
+
+### 7. Login as Staff
+# @name loginStaff
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "staff",
+  "password": "staff123"
+}
+
+### 8. Get Profile (use access_token from login response)
+GET {{baseUrl}}/api/auth/profile
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 9. Refresh Token (use refresh_token from login response)
+PUT {{baseUrl}}/api/auth/refresh
+Content-Type: {{contentType}}
+
+{
+  "refresh_token": "YOUR_REFRESH_TOKEN_HERE"
+}
+
+### 10. Logout (use refresh_token from login response)
+DELETE {{baseUrl}}/api/auth/logout
+Content-Type: {{contentType}}
+
+{
+  "refresh_token": "YOUR_REFRESH_TOKEN_HERE"
+}
+
+### 11. Login with Invalid Credentials (should fail)
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "admin",
+  "password": "wrongpassword"
+}
+
+### 12. Register with Duplicate Username (should fail)
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "username": "admin",
+  "password": "newpassword",
+  "fullname": "Another Admin",
+  "role": "admin"
+}
+
+### 13. Access Protected Route without Token (should fail)
+GET {{baseUrl}}/api/auth/profile
+
+### 14. Access Protected Route with Invalid Token (should fail)
+GET {{baseUrl}}/api/auth/profile
+Authorization: Bearer invalid_token_here
